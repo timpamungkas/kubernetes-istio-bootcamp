@@ -6,7 +6,7 @@
   * [Source Code](#source-code)
 
 ## Overview
-This is resource page for [Java Spring & Apache Kafka Bootcamp course](https://www.udemy.com/course/apache-kafka-with-java-spring-boot-theory-hands-on-coding/?referralCode=5C42CAF98051BB9CBA0A)
+This is resource page for [Devops Using Kubernete, Istio, and Google Cloud](https://www.udemy.com/course/practical-devops-kubernetes-istio-kiali-prometheus-nginx-google-cloud/?referralCode=4974809D039D2D8C31B9)
 
 ----
 
