@@ -134,10 +134,10 @@ kubectl describe pod my-nginx-someRandomNumber
 
 ```bash
 # Deploy your own image (from previous lecture)
-kubectl create deployment my-devops-blue --image [your-docker-username]/devops-blue:1.0.0
+kubectl create deployment my-devops-blue --image [your-docker-username]/devops-blue:2.0.0
 
 # Or you can use public image from my docker
-kubectl create deployment my-devops-blue --image timpamungkas/devops-blue:1.0.0
+kubectl create deployment my-devops-blue --image timpamungkas/devops-blue:2.0.0
 
 # Create service for nginx deployment
 kubectl expose deployment my-devops-blue --type LoadBalancer --port 8111 --name my-devops-blue-lb
@@ -803,7 +803,7 @@ helm upgrade --install istiod istiod --repo https://istio-release.storage.google
 kubectl apply -f istio-scrape.yml
 
 # Deployment apply
-kubectl apply -f devops-istio-basic-deployment-1.0.0.yml
+kubectl apply -f devops-istio-basic-deployment-2.0.0.yml
 ```
 
 
@@ -855,7 +855,7 @@ kubectl apply -f install-jaeger-simple.yml
 helm upgrade istiod istiod --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --values values-istiod-after-jaeger.yml
 
 # apply deployment
-kubectl apply -f devops-istio-basic-deployment-1.0.1.yml
+kubectl apply -f devops-istio-basic-deployment-2.0.1.yml
 ```
 
 
@@ -872,7 +872,7 @@ kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releas
 kubectl apply -f devops-open-telemetry.yml
 
 # Deploy application with open telemetry sidecar
-kubectl apply -f devops-istio-basic-deployment-1.0.0-otel.yml
+kubectl apply -f devops-istio-basic-deployment-2.0.0-otel.yml
 ```
 
 ## Prometheus, Grafana, Istio
@@ -903,11 +903,11 @@ helm upgrade --install kiali-server kiali-server --repo https://kiali.org/helm-c
 Clear all deployment (pod, service, ingress) on `devops` namespace, then apply below 
 
 ```bash
-# 1.0.0
-kubectl apply -f devops-istio-routing-1.0.0.yml
+# 2.0.0
+kubectl apply -f devops-istio-routing-2.0.0.yml
 
-# 1.0.1 (additional pod)
-kubectl apply -f devops-istio-routing-1.0.1.yml
+# 2.0.1 (additional pod)
+kubectl apply -f devops-istio-routing-2.0.1.yml
 
 # Service & Ingress
 kubectl apply -f devops-istio-routing-service.yml
@@ -950,11 +950,11 @@ kubectl apply -f devops-istio-load-balancer.yml
  - Clear all istio objects (virtual service, destination rule)
 
 ```bash
-# 1.0.0
-kubectl apply -f devops-istio-canary-1.0.0.yml
+# 2.0.0
+kubectl apply -f devops-istio-canary-2.0.0.yml
 
-# 1.0.1 (new white pod)
-kubectl apply -f devops-istio-canary-1.0.1.yml
+# 2.0.1 (new white pod)
+kubectl apply -f devops-istio-canary-2.0.1.yml
 
 # Service & Ingress
 kubectl apply -f devops-istio-canary-service.yml

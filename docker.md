@@ -56,29 +56,29 @@ docker run -d -p 8888:80 --name dancing_octopus -v d:/my-courses/nginx-html:/usr
 
 Download and extract scripts (zip file) from last section of the course, on lecture with title **Resources & References**  
 
-The java code and docker files are located under folder `kubernetes-istio\kubernetes-istio-java-code`, and in this part we use `release-1.0.0` sub-folder
+The java code and docker files are located under folder `kubernetes-istio\kubernetes-istio-java-code`, and in this part we use `release-2.0.0` sub-folder
 
 ```bash
 # Build java from gradle (note the separator, use \ or / according to your operating system)
 # This is for windows OS (\)
-# From kubernetes-istio\kubernetes-istio-java-code\release-1.0.0\devops.blue
+# From kubernetes-istio\kubernetes-istio-java-code\release-2.0.0\devops.blue
 .\gradlew clean bootJar
 
 # Build docker image (note the dot as last character)
-docker build --tag devops-blue:1.0.0 .
+docker build --tag devops-blue:2.0.0 .
 
 # Login to docker registry (just do this once)
 docker login
 
 # Tag local docker image
-docker tag devops-blue:1.0.0 [your-docker-username]/devops-blue:1.0.0
+docker tag devops-blue:2.0.0 [your-docker-username]/devops-blue:2.0.0
 
 # Push docker image to registry
-docker push [your-docker-username]/devops-blue:1.0.0
+docker push [your-docker-username]/devops-blue:2.0.0
 ```
 
 To run the image, exposing at port 8888
 
 ```bash
-docker run -d -p 8888:8111 --name my-devops-blue devops-blue:1.0.0
+docker run -d -p 8888:8111 --name my-devops-blue devops-blue:2.0.0
 ```
