@@ -227,10 +227,10 @@ kubectl get pod -n devops
 # Find container name on certain pod (equals to pod spec on declarative file)
 kubectl get pods -n devops [pod-name] -o jsonpath='{.spec.containers[*].name}'
 
-# Run bash to devops-blue container inside [pod-name]
+# Run bin/sh (shell) to devops-blue container inside [pod-name]
 kubectl exec -n devops [pod-name] -c devops-blue -ti -- /bin/sh
 
-# Run bin/sh (alpine linux shell) to alpine-linux container inside [pod-name]
+# Run bin/sh (shell) to alpine-linux container inside [pod-name]
 kubectl exec -n devops [pod-name] -c alpine-linux -ti -- /bin/sh
 
 ```
@@ -265,11 +265,11 @@ kubectl get pod -n devops
 # Find container name on certain pod (equals to pod spec on declarative file)
 kubectl get pods -n devops [pod-name] -o jsonpath='{.spec.containers[*].name}'
 
-# Run bash to devops-blue container inside [pod-name]
-kubectl exec -n devops [pod-name] -c devops-blue -ti bash
+# Run bin/sh (shell) to devops-blue container inside [pod-name]
+kubectl exec -n devops [pod-name] -c devops-blue -ti -- /bin/sh
 
-# Run bin/sh (alpine linux shell) to alpine-linux container inside [pod-name]
-kubectl exec -n devops [pod-name] -c alpine-linux -ti /bin/sh
+# Run bin/sh (shell) to alpine-linux container inside [pod-name]
+kubectl exec -n devops [pod-name] -c alpine-linux -ti -- /bin/sh
 
 ```
 
