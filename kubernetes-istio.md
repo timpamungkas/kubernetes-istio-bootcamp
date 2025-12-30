@@ -636,7 +636,7 @@ kubectl create secret docker-registry dockerhub-secret --docker-server=https://i
 # Run these on folder helm-charts
 
 # [Optional] Render helm template
-helm template helm-yellow-01 spring-boot-rest-api --namespace devops --create-namespace --values ..\kubernetes\helm-spring-boot-rest-api-01\values-spring-boot.yml
+helm template helm-yellow-01 spring-boot-rest-api --namespace devops --create-namespace --values ..\kubernetes\helm-spring-boot-rest-api-01\values-spring-boot.yml --output-dir d:/helm-template-output
 
 # Install helm release
 helm upgrade --install helm-yellow-01 spring-boot-rest-api --namespace devops --create-namespace --values ..\kubernetes\helm-spring-boot-rest-api-01\values-spring-boot.yml
