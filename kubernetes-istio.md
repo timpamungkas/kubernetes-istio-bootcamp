@@ -448,7 +448,7 @@ The `kubeseal` will be installed in Go Path, subfolder bin. To navigate to the G
 helm upgrade --install sealed-secrets sealed-secrets --set-string fullnameOverride=sealed-secrets-controller --repo https://bitnami-labs.github.io/sealed-secrets --namespace kube-system
 
 # Create secret, output it only at terminal (not upload to kubernetes cluster)
-kubectl create secret generic my-secret -n devops -o yaml --dry-run=client --from-file [path to my-config-file.yml]
+kubectl create secret generic my-secret -n devops -o yaml --dry-run=server --from-file [path to my-config-file.yml]
 
 # Port forward the sealed secret service to port 8899
 kubectl port-forward -n kube-system service/sealed-secrets-controller 8899:8080
