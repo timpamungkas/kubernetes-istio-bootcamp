@@ -22,20 +22,21 @@
 - [Nginx Load Balancer](#nginx-load-balancer)
   - [Ingress Over TLS](#ingress-over-tls)
   - [Introducing Helm](#introducing-helm)
+  - [Nginx Ingress Controller Retirement](#nginx-ingress-controller-retirement)
+  - [Gateway API Hands On](#gateway-api-hands-on)
   - [Sealed Secret](#sealed-secret)
     - [Installing kubeseal](#installing-kubeseal)
     - [Syntax](#syntax)
   - [Resource Monitoring - Metrics Server](#resource-monitoring---metrics-server)
   - [Resource Monitoring - Kube Prometheus Stack](#resource-monitoring---kube-prometheus-stack)
-  - [Monitoring Ingress Nginx](#monitoring-ingress-nginx)
-  - [Ingress Nginx Combination](#ingress-nginx-combination)
-    - [Official Documentation](#official-documentation)
-  - [Autoscaling](#autoscaling)
+  - [Monitoring Ingress HAProxy](#monitoring-ingress-haproxy)
+  - [Ingress HAProxy Combination](#ingress-haproxy-combination)
+  - [Horizontal Pod Autoscaling](#horizontal-pod-autoscaling)
   - [Stateful Set](#stateful-set)
   - [Stateful Set on Practice](#stateful-set-on-practice)
   - [Namespace Quota](#namespace-quota)
   - [Private Repository](#private-repository)
-  - [Helm Spring Boot Rest API 01](#helm-spring-boot-rest-api-01)
+  - [Creating Helm Chart - Spring Boot Rest API 01](#creating-helm-chart---spring-boot-rest-api-01)
   - [Helm Chartmuseum (Spring Boot REST API 02)](#helm-chartmuseum-spring-boot-rest-api-02)
   - [Helm Spring Boot Rest API 03](#helm-spring-boot-rest-api-03)
   - [Helm Github As Repository (Spring Boot REST API 03)](#helm-github-as-repository-spring-boot-rest-api-03)
@@ -411,6 +412,26 @@ kubectl create secret tls api-devops-local-cert --key [path-to-key-file] --cert 
 helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
 ```
 
+## Nginx Ingress Controller Retirement
+  - [HAProxy K8s Ingress Controller](https://www.haproxy.com/documentation/kubernetes-ingress/)
+  
+```bash
+# Install HAProxy using helm
+helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.service.type=LoadBalancer --set controller.ingressClass=haproxy
+```
+
+## Gateway API Hands On
+
+``` bash
+# Install The Gateway API resources
+kubectl kustomize https://github.com/nginx/nginx-gateway-fabric/config/crd/gateway-api/standard | kubectl apply -f -
+
+# Install Nginx Gateway Fabric
+helm upgrade --install my-nginx-gateway-api oci://ghcr.io/nginx/charts/nginx-gateway-fabric --create-namespace -n nginx-gateway
+
+# Check the Nginx Gateway Fabric installation
+kubectl get service -n nginx-gateway
+```
 
 ## Sealed Secret
 
@@ -418,8 +439,8 @@ helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.git
 
 ### Installing kubeseal
 [Non Windows](https://github.com/bitnami-labs/sealed-secrets#installation)
-[Windows](https://github.com/bitnami-labs/sealed-secrets/releases). Find `kubeseal` release. In windows, it might not updated, so you might want to follow [this link](https://github.com/bitnami-labs/sealed-secrets#installation-from-source) for up-to-date release. However, installing from source requires [go installation](https://go.dev/dl/).
-To extract tar.gz file on Windows, use tools like [7zip](https://www.7-zip.org/)
+[Windows](https://github.com/bitnami-labs/sealed-secrets/releases). Find `kubeseal` release. In windows, it might not updated, so you might want to follow [this link](https://github.com/bitnami-labs/sealed-secrets#installation-from-source) for up-to-date release. However, installing from source requires [go installation](https://go.dev/dl/).  
+The `kubeseal` will be installed in Go Path, subfolder bin. To navigate to the Go path (Windows), `cd %GOPATH%\bin`
 
 ### Syntax
  ```bash
@@ -435,11 +456,17 @@ kubectl port-forward -n kube-system service/sealed-secrets-controller 8899:8080
 # Download public certificate
 kubeseal --controller-name=sealed-secrets-controller --controller-namespace=kube-system --fetch-cert > mycert.pem
 
-# Seal the secret using kubeseal
+# Seal the secret using kubeseal (Windows CMD/Mac)
 kubeseal -flag < [path-to-input-secret-file] > [path-to-output-sealed-secret-file]
 
-# Example, output is yml file format, using mycert.pem public certificate
+# Example, output is yml file format, using mycert.pem public certificate (Windows CMD/Mac)
 kubeseal --cert mycert.pem -o yaml < my-secret-file.yml > my-sealed-secret-file.yml
+
+# Seal the secret using kubeseal (Windows PowerShell)
+Get-Content [path-to-input-secret-file] | kubeseal -flag | Out-File -Encoding utf8 [path-to-output-sealed-secret-file]
+
+# Example, output is yml file format, using mycert.pem public certificate (Windows PowerShell)
+Get-Content my-secret-file.yml | kubeseal -o yaml --cert mycert.pem | Out-File -Encoding utf8 my-sealed-secret-file.yml
 
 # Apply the sealed secret
 kubectl apply -f my-sealed-secret-file.yml
@@ -494,7 +521,7 @@ kubectl port-forward service/my-kube-prometheus-stack-grafana -n monitoring 3000
 kubectl port-forward service/my-kube-prometheus-stack-alertmanager -n monitoring 9093:9093
 ```
 
-## Monitoring Ingress Nginx
+## Monitoring Ingress HAProxy
 
 ```bash
 # Fresh start - delete minikube cluster
@@ -509,51 +536,34 @@ minikube addons disable ingress
 # 2. Enable metrics server
 minikube addons enable metrics-server
 
-# 3. Install nginx ingress controller using helm
-helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
+# 3. Install HAProxy ingress controller using helm
+helm install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.ingressClass=haproxy --values values-ingress-haproxy.yml
 
 # 4. Install kube-prometheus-stack using helm
-helm upgrade --install my-kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack --namespace monitoring --create-namespace
+helm install my-kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack --namespace monitoring --create-namespace --values values-kube-prometheus.yml
 
-# 5. Upgrade nginx installation. Run on folder monitoring-ingress-nginx
-helm upgrade ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --values values-ingress-nginx.yml
-
-# Optional : Check that nginx configured
-helm get values ingress-nginx --namespace ingress-nginx
-
-# 6. Upgrade kube-prometheus installation. Run on folder monitoring-ingress-nginx
-helm upgrade my-kube-prometheus-stack kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts --namespace monitoring --values values-kube-prometheus.yml
-
-# Optional : Check that prometheus is configured
-helm get values my-kube-prometheus-stack --namespace monitoring
-
-# 7. Apply the deployment sample
+# 5. Apply the deployment sample
 kubectl apply -f devops-monitoring.yml
 
-# 8. Tunneling
+# 6. Tunneling
 # Access via localhost/grafana    localhost/prometheus
 minikube tunnel
 ```
 
-## Ingress Nginx Combination
-
-### Official Documentation
-  - [Nginx ingress annotation](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations)
-  - [Nginx ingress config map](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap)
-  - [Nginx variables](http://nginx.org/en/docs/varindex.html)
+## Ingress HAProxy Combination
 
 ```bash
 # Fresh start - delete minikube cluster
 minikube delete
 
-# Fresh start - restart using workaround to enable resource monitor
-minikube start --extra-config=kubelet.housekeeping-interval=10s
+# Fresh start
+minikube start
 
 # Generate K8s secret for TLS certificate
 kubectl create secret tls api-devops-local-cert -n devops --key [path-to-key-file] --cert [path-to-crt-file]
 
-# 1. Install nginx ingress controller using helm
-helm upgrade --install my-ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
+# 1. Install HAProxy ingress controller using helm
+helm install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.ingressClass=haproxy --values values-ingress-haproxy.yml
 
 # 2. Apply the deployment sample
 kubectl apply -f ingress-combination-deployment.yml
@@ -564,29 +574,9 @@ kubectl apply -f ingress-combination-ingress.yml
 # 4. Tunneling
 # Access via localhost/grafana    localhost/prometheus
 minikube tunnel
-
-# 5. Apply nginx config for request / response custom header
-kubectl apply -f ingress-combination-nginx-configmap-headers.yml
-kubectl apply -f ingress-combination-nginx-configmap-config.yml
-
-# 6. restart nginx
-kubectl rollout restart deployment -n ingress-nginx my-ingress-nginx-controller
-
-
-# Monitoring - 1. Enable metrics server
-minikube addons enable metrics-server
-
-# Monitoring - 2. Install kube-prometheus-stack using helm
-helm upgrade --install my-kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack --namespace monitoring --create-namespace
-
-# Monitoring - 3. Upgrade nginx installation
-helm upgrade my-ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --values values-ingress-nginx.yml
-
-# Monitoring - 4. Upgrade kube-prometheus installation
-helm upgrade my-kube-prometheus-stack kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts --namespace monitoring --values values-kube-prometheus.yml
 ```
 
-## Autoscaling
+## Horizontal Pod Autoscaling
 
 ```bash
 # Enable metrics server
@@ -636,7 +626,7 @@ kubectl port-forward -n rabbitmq my-rabbitmq-2 9222:15672
 kubectl create secret docker-registry dockerhub-secret --docker-server=https://index.docker.io/v1/ --docker-username=[your-username] --docker-password=[your-password] --docker-email=[your-email]
 ```
 
-## Helm Spring Boot Rest API 01
+## Creating Helm Chart - Spring Boot Rest API 01
 
 [Helm template tricks & tips](https://helm.sh/docs/howto/charts_tips_and_tricks/)
 [Helm template best practice](https://helm.sh/docs/howto/charts_tips_and_tricks/)
