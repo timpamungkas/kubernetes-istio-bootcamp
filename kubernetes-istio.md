@@ -40,6 +40,8 @@
   - [Helm Chartmuseum (Spring Boot REST API 02)](#helm-chartmuseum-spring-boot-rest-api-02)
   - [Helm Harbor (Spring Boot REST API 02)](#helm-harbor-spring-boot-rest-api-02)
   - [Helm Spring Boot Rest API 03](#helm-spring-boot-rest-api-03)
+    - [via ChartMuseum](#via-chartmuseum)
+    - [via Harbor](#via-harbor)
   - [Helm Github As Repository (Spring Boot REST API 03)](#helm-github-as-repository-spring-boot-rest-api-03)
   - [Multiple Helm Charts (Spring Boot REST API 04)](#multiple-helm-charts-spring-boot-rest-api-04)
   - [ArgoCD](#argocd)
@@ -702,6 +704,8 @@ helm upgrade --install helm-yellow-02 oci://harbor.local/helm-charts/spring-boot
 
 ## Helm Spring Boot Rest API 03
 
+### via ChartMuseum
+
 ```bash
 # Install helm release (values.yml + values-dev.yml)
 helm upgrade --install helm-blue-03 spring-boot-rest-api --repo http://chartmuseum.local/chartmuseum --username chartmuseum --password password --namespace devops --create-namespace --version 0.1.0 --values values.yml --values values-dev.yml 
@@ -710,6 +714,14 @@ helm upgrade --install helm-blue-03 spring-boot-rest-api --repo http://chartmuse
 helm upgrade --install helm-blue-03 spring-boot-rest-api --repo http://chartmuseum.local/chartmuseum --username chartmuseum --password password --namespace devops --create-namespace --version 0.1.0 --values values.yml --values values-prod.yml 
 ```
 
+### via Harbor
+```bash
+# Install helm release (values.yml + values-dev.yml)
+helm upgrade --install helm-blue-03 spring-boot-rest-api oci://harbor.local/helm-charts/spring-boot-rest-api --namespace devops --create-namespace --version 0.1.0 --values values.yml --values values-dev.yml --insecure-skip-tls-verify
+
+# Install helm release (values.yml + values-prod.yml)
+helm upgrade --install helm-blue-03 spring-boot-rest-api oci://harbor.local/helm-charts/spring-boot-rest-api --namespace devops --create-namespace --version 0.1.0 --values values.yml --values values-prod.yml --insecure-skip-tls-verify
+```
 
 ## Helm Github As Repository (Spring Boot REST API 03)
 
