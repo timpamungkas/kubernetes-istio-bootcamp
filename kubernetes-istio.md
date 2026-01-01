@@ -717,10 +717,10 @@ helm upgrade --install helm-blue-03 spring-boot-rest-api --repo http://chartmuse
 ### via Harbor
 ```bash
 # Install helm release (values.yml + values-dev.yml)
-helm upgrade --install helm-blue-03 spring-boot-rest-api oci://harbor.local/helm-charts/spring-boot-rest-api --namespace devops --create-namespace --version 0.1.0 --values values.yml --values values-dev.yml --insecure-skip-tls-verify
+helm upgrade --install helm-blue-03 oci://harbor.local/helm-charts/spring-boot-rest-api --namespace devops --insecure-skip-tls-verify --create-namespace --version 0.1.0 --values values.yml --values values-dev.yml 
 
 # Install helm release (values.yml + values-prod.yml)
-helm upgrade --install helm-blue-03 spring-boot-rest-api oci://harbor.local/helm-charts/spring-boot-rest-api --namespace devops --create-namespace --version 0.1.0 --values values.yml --values values-prod.yml --insecure-skip-tls-verify
+helm upgrade --install helm-blue-03 oci://harbor.local/helm-charts/spring-boot-rest-api --namespace devops --insecure-skip-tls-verify --create-namespace --version 0.1.0 --values values.yml --values values-prod.yml 
 ```
 
 ## Helm Github As Repository (Spring Boot REST API 03)
