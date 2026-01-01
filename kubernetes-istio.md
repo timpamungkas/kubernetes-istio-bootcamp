@@ -38,6 +38,7 @@
   - [Private Repository](#private-repository)
   - [Creating Helm Chart - Spring Boot Rest API 01](#creating-helm-chart---spring-boot-rest-api-01)
   - [Helm Chartmuseum (Spring Boot REST API 02)](#helm-chartmuseum-spring-boot-rest-api-02)
+  - [Helm Harbor (Spring Boot REST API 02)](#helm-harbor-spring-boot-rest-api-02)
   - [Helm Spring Boot Rest API 03](#helm-spring-boot-rest-api-03)
   - [Helm Github As Repository (Spring Boot REST API 03)](#helm-github-as-repository-spring-boot-rest-api-03)
   - [Multiple Helm Charts (Spring Boot REST API 04)](#multiple-helm-charts-spring-boot-rest-api-04)
@@ -663,6 +664,41 @@ helm package spring-boot-rest-api
 # Create release spring-boot-rest-api from local chartmuseum, use chart version 0.1.0
 helm upgrade --install helm-yellow-02 spring-boot-rest-api --repo http://chartmuseum.local/chartmuseum --username chartmuseum --password password --namespace devops --create-namespace --version 0.1.0 --values values-spring-boot.yml
 ```
+
+
+
+## Helm Harbor (Spring Boot REST API 02)
+ - [Artifact hub](https://artifacthub.io/packages/helm/harbor/harbor)
+ - [Homepage](https://goharbor.io/)
+
+```bash
+# Add Helm repository
+helm repo add harbor https://helm.goharbor.io
+helm repo update
+
+# Create secret for TLS
+kubectl create secret tls harbor-local-cert --key [path-to-key-file] --cert [path-to-crt-file]]
+
+# Install harbor
+helm upgrade --install harbor harbor/harbor --namespace harbor --create-namespace --values values-harbor.yml
+
+# Package chart as tgz to be uploaded
+helm package spring-boot-rest-api
+
+# Login Helm into the OCI-compatible registry.
+# Use the --insecure flag to allow an insecure connection (due to untrusted/self-signed TLS certificate).
+helm registry login harbor.local --username admin --password harbor12345 --insecure
+
+# Pushes the packaged Helm chart using the OCI protocol.
+# Use the --insecure-skip-tls-verify flag to skips TLS certificate verification (due to untrusted/self-signed TLS certificate).
+helm push spring-boot-rest-api-0.1.0.tgz oci://harbor.local/helm-charts --insecure-skip-tls-verify
+
+# Create release spring-boot-rest-api from local harbor, using chart version 0.1.0
+# Use the --insecure-skip-tls-verify flag to skips TLS certificate verification (due to untrusted/self-signed TLS certificate).
+helm upgrade --install helm-yellow-02 oci://harbor.local/helm-charts/spring-boot-rest-api --version 0.1.0 --namespace devops --create-namespace --values values-spring-boot.yml --insecure-skip-tls-verify
+```
+
+
 
 ## Helm Spring Boot Rest API 03
 
