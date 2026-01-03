@@ -748,7 +748,7 @@ helm upgrade --install helm-blue-04 chart-with-dependencies --namespace devops -
 helm upgrade --install my-argocd argo-cd --repo https://argoproj.github.io/argo-helm --namespace argocd --create-namespace --values values-argocd.yml
 ```
 
-[Create github personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+[Create github personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token)
 
 
 ## Tips ArgoCD
