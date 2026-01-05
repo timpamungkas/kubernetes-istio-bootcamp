@@ -762,6 +762,8 @@ helm upgrade --install my-argocd argo-cd --repo https://argoproj.github.io/argo-
 The yaml references available on folder `kubernetes-istio-docs/devops-app-deployment`
 
 ```bash
+helm create sealed-secret
+
 kubeseal --controller-name=sealed-secrets-controller --controller-namespace=kube-system --fetch-cert > mycert.pem
 
 # Example, output is yml file format, using mycert.pem public certificate
