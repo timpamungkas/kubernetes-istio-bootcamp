@@ -803,7 +803,7 @@ kubectl apply -f devops-reloader-deployment.yml
 
 ## Cert Manager
 ```bash
-helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.io --namespace cert-manager --create-namespace --set installCRDs="true"
+helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.io --namespace cert-manager --create-namespace --set crds.enabled="true"
 ```
 
 
