@@ -52,12 +52,10 @@
   - [Cert Manager](#cert-manager)
 - [East-West Traffic](#east-west-traffic)
   - [Istio : Kube-Prometheus](#istio--kube-prometheus)
-- [Istio : Nginx](#istio--nginx)
+- [Istio : Ingress Controller](#istio--ingress-controller)
   - [Istio : Basic](#istio--basic)
-  - [Istio : Enable Sidecar Injection](#istio--enable-sidecar-injection)
-  - [Istio : Kiali](#istio--kiali)
   - [Istio : Jaeger](#istio--jaeger)
-  - [Istio : Open Telemetry](#istio--open-telemetry)
+  - [Istio : Kiali](#istio--kiali)
   - [Prometheus, Grafana, Istio](#prometheus-grafana-istio)
   - [Securing Kiali](#securing-kiali)
   - [Istio : Traffic Routing](#istio--traffic-routing)
@@ -820,11 +818,11 @@ helm upgrade --install kube-prometheus-stack --repo https://prometheus-community
 ```
 
 
-# Istio : Nginx
+# Istio : Ingress Controller
 
 ```bash
-# nginx
-helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace --values values-ingress-nginx.yml
+# haproxy ingress
+helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.service.type=LoadBalancer --set controller.ingressClass=haproxy -f .\values-ingress-haproxy.yml
 ```
 
 
@@ -844,23 +842,34 @@ kubectl apply -f istio-scrape.yml
 
 # Deployment apply
 kubectl apply -f devops-istio-basic-deployment-2.0.0.yml
+
+# Disable istio on ingress
+kubectl apply -f disable-istio-on-ingress.yml
+kubectl rollout restart deployment -n haproxy
+
+# add label to namespace
+kubectl apply -f devops-istio-enable-sidecar.yml
+kubectl rollout restart deployment -n devops
 ```
 
 
-## Istio : Enable Sidecar Injection
+## Istio : Jaeger
 
 ```bash
-# add label to namespace
-kubectl apply -f devops-istio-enable-sidecar.yml
+# Need to install certmanager
+helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.io --namespace cert-manager --create-namespace --set crds.enabled="true"
 
-# dummy pod
-kubectl apply -f devops-istio-dummy-blue.yml
+# Install opentelemetry
+kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
 
-# restart existing deployment
-kubectl rollout restart deployment -n devops
+# Install HAProxy Ingress Controller
+helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.service.type=LoadBalancer --set controller.ingressClass=haproxy
 
-# remove dummy pod
-kubectl delete -f devops-istio-dummy-blue.yml
+# Install jaeger
+helm upgrade --install jaeger jaegertracing/jaeger --repo https://jaegertracing.github.io/helm-charts --version 4.3.2 --values .\values-jaeger-all-in-one.yml --namespace jaeger --create-namespace
+
+# Apply deployment
+kubectl apply -f devops-istio-basic-deployment-2.0.1.yml
 ```
 
 
@@ -873,47 +882,6 @@ kubectl delete -f devops-istio-dummy-blue.yml
 helm upgrade --install kiali-server kiali-server --repo https://kiali.org/helm-charts --namespace istio-system --create-namespace --values values-kiali-server.yml
 ```
 
-
-## Istio : Jaeger
-
-```bash
-# Need to install certmanager
-helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.io --namespace cert-manager --create-namespace --set installCRDs="true"
-
-# create namespace
-kubectl apply -f devops-istio-jaeger-namespace.yml
-
-# Create jaeger operator
-# Latest version, google with keyword : jaegertracing.io install kubernetes operator
-# wait for operator to complete
-kubectl apply -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.36.0/jaeger-operator.yaml -n observability
-
-# Install simple jaeger
-kubectl apply -f install-jaeger-simple.yml
-
-# Update istiod, send 100% trace to jaeger
-helm upgrade istiod istiod --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --values values-istiod-after-jaeger.yml
-
-# apply deployment
-kubectl apply -f devops-istio-basic-deployment-2.0.1.yml
-```
-
-
-## Istio : Open Telemetry
-
-```bash
-# Make sure cert-manager already installed
-helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.io --namespace cert-manager --create-namespace --set installCRDs="true"
-
-# Install open telemetry operator
-kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
-
-# Install open telemetry objects
-kubectl apply -f devops-open-telemetry.yml
-
-# Deploy application with open telemetry sidecar
-kubectl apply -f devops-istio-basic-deployment-2.0.0-otel.yml
-```
 
 ## Prometheus, Grafana, Istio
 
