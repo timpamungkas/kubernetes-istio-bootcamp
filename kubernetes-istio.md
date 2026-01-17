@@ -834,8 +834,8 @@ helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespac
 # Istio base & CRD
 helm upgrade --install istio-base base --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --create-namespace
 
-# Istio daemon (istiod)
-helm upgrade --install istiod istiod --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --create-namespace
+# Istio daemon (istiod) on Minikube
+helm upgrade --install istiod istiod --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --create-namespace 
 
 # Scrape istio metrics
 kubectl apply -f istio-scrape.yml
@@ -862,11 +862,12 @@ helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.
 # Install opentelemetry
 kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
 
-# Install HAProxy Ingress Controller
-helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.service.type=LoadBalancer --set controller.ingressClass=haproxy
-
 # Install jaeger
-helm upgrade --install jaeger jaegertracing/jaeger --repo https://jaegertracing.github.io/helm-charts --version 4.3.2 --values .\values-jaeger-all-in-one.yml --namespace jaeger --create-namespace
+helm repo add jaegertracing https://jaegertracing.github.io/helm-charts
+
+helm repo update
+
+helm upgrade --install jaeger jaegertracing/jaeger --version 4.3.2 --values .\values-jaeger-all-in-one.yml --namespace jaeger --create-namespace
 
 # Apply deployment
 kubectl apply -f devops-istio-basic-deployment-2.0.1.yml
