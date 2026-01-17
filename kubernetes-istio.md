@@ -834,7 +834,7 @@ helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespac
 # Istio base & CRD
 helm upgrade --install istio-base base --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --create-namespace
 
-# Istio daemon (istiod) on Minikube
+# Istio daemon (istiod)
 helm upgrade --install istiod istiod --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --create-namespace 
 
 # Scrape istio metrics
