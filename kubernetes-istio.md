@@ -822,7 +822,7 @@ helm upgrade --install kube-prometheus-stack --repo https://prometheus-community
 
 ```bash
 # haproxy ingress
-helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.service.type=LoadBalancer --set controller.ingressClass=haproxy -f .\values-ingress-haproxy.yml
+helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.service.type=LoadBalancer --set controller.ingressClass=haproxy -f values-ingress-haproxy.yml
 ```
 
 
@@ -867,7 +867,10 @@ helm repo add jaegertracing https://jaegertracing.github.io/helm-charts
 
 helm repo update
 
-helm upgrade --install jaeger jaegertracing/jaeger --version 4.3.2 --values .\values-jaeger-all-in-one.yml --namespace jaeger --create-namespace
+helm upgrade --install jaeger jaegertracing/jaeger --version 4.3.2 --values values-jaeger-all-in-one.yml --namespace jaeger --create-namespace
+
+# Send tracing to Jaeger
+kubectl apply -f istio-jaeger-tracing.yml
 
 # Apply deployment
 kubectl apply -f devops-istio-basic-deployment-2.0.1.yml
@@ -880,7 +883,11 @@ kubectl apply -f devops-istio-basic-deployment-2.0.1.yml
 
 ```bash
 # Kiali Server
-helm upgrade --install kiali-server kiali-server --repo https://kiali.org/helm-charts --namespace istio-system --create-namespace --values values-kiali-server.yml
+helm repo add kiali https://kiali.org/helm-charts
+
+helm repo update
+
+helm upgrade --install kiali-server kiali/kiali-server  --namespace istio-system --create-namespace --values values-kiali-server.yml
 ```
 
 
