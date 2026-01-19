@@ -887,7 +887,10 @@ helm repo add kiali https://kiali.org/helm-charts
 
 helm repo update
 
-helm upgrade --install kiali-server kiali/kiali-server  --namespace istio-system --create-namespace --values values-kiali-server.yml
+helm upgrade --install kiali-server kiali/kiali-server  --namespace istio-system --create-namespace --values values-kiali-server.yml --version 2.20.0
+
+# Modify telemetry
+kubectl apply -f istio-prometheus-telemetry.yml
 ```
 
 
