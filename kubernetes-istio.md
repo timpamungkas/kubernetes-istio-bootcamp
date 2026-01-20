@@ -912,7 +912,7 @@ URL for prometheus:
 
 ```bash
 # Create service account token
-kubectl apply -f kiali-sa-token.yml
+kubectl apply -f kiali-service-account-token.yml
 
 # Use token auth
 helm upgrade --install kiali-server kiali-server --repo https://kiali.org/helm-charts --namespace istio-system --create-namespace --values values-kiali-server-secure.yml
