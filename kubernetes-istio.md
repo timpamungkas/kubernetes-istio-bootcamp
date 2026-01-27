@@ -538,10 +538,10 @@ minikube addons disable ingress
 minikube addons enable metrics-server
 
 # 3. Install HAProxy ingress controller using helm
-helm install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.ingressClass=haproxy --values values-ingress-haproxy.yml
+helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.ingressClass=haproxy --values values-ingress-haproxy.yml
 
 # 4. Install kube-prometheus-stack using helm
-helm install my-kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack --namespace monitoring --create-namespace --values values-kube-prometheus.yml
+helm upgrade --install my-kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack --namespace monitoring --create-namespace --values values-kube-prometheus.yml
 
 # 5. Apply the deployment sample
 kubectl apply -f devops-monitoring.yml
@@ -1003,6 +1003,9 @@ Use this on `VirtualService.spec.retryOn` : `5xx,400,401,403,404,405,406,408,413
 
 ## Istio : Circuit Breaker
 
+```bash
+kubectl apply -f devops-istio-circuit-breaker.yml
+```
 
 ## Istio : Mutual TLS 
 
@@ -1014,8 +1017,6 @@ kubectl apply -f devops-istio-mtls-deployment.yml
 kubectl apply -f devops-istio-mtls-mode.yml
 
 # Reload deployment on namespaces after namespace modification
-kubectl rollout restart deployment -n ingress-nginx
-
 kubectl rollout restart deployment -n devops-blue
 
 kubectl rollout restart deployment -n devops-yellow
@@ -1023,15 +1024,3 @@ kubectl rollout restart deployment -n devops-yellow
 kubectl rollout restart deployment -n devops-white
 ```
 
-
-kubectl apply -f devops-istio-mtls-deployment.yml
-
-kubectl apply -f devops-istio-mtls-mode.yml
-
-kubectl rollout restart deployment -n ingress-nginx
-
-kubectl rollout restart deployment -n devops-blue
-
-kubectl rollout restart deployment -n devops-yellow
-
-kubectl rollout restart deployment -n devops-white
