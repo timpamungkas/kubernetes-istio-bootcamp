@@ -1,71 +1,73 @@
 - [Kubernetes](#kubernetes)
-  * [Hello Kubernetes](#hello-kubernetes)
-  * [Kubectl Command Cheat Sheet](#kubectl-command-cheat-sheet)
-  * [Scaling Pod](#scaling-pod)
-    + [Troubleshoot](#troubleshoot)
-  * [Declarative Kubernetes](#declarative-kubernetes)
-  * [Namespace](#namespace)
-  * [Label](#label)
-  * [Dashboard](#dashboard)
-  * [Volume](#volume)
-    + [Empty Dir](#empty-dir)
-    + [Host Path](#host-path)
-    + [Local](#local)
-  * [Configmap](#configmap)
-    + [Creating configmap from command line](#creating-configmap-from-command-line)
-    + [Creating configmap from file](#creating-configmap-from-file)
-  * [Secret](#secret)
-    + [Creating secret from command line](#creating-secret-from-command-line)
-    + [Creating secret from file](#creating-secret-from-file)
-  * [Service](#service)
-    + [NodePort](#nodeport)
+  - [Hello Kubernetes](#hello-kubernetes)
+  - [Kubectl Command Cheat Sheet](#kubectl-command-cheat-sheet)
+  - [Scaling Pod](#scaling-pod)
+    - [Troubleshoot](#troubleshoot)
+  - [Declarative Kubernetes](#declarative-kubernetes)
+  - [Namespace](#namespace)
+  - [Label](#label)
+  - [Dashboard](#dashboard)
+  - [Volume](#volume)
+    - [Empty Dir](#empty-dir)
+    - [Host Path](#host-path)
+    - [Local](#local)
+  - [Configmap](#configmap)
+    - [Creating configmap from command line](#creating-configmap-from-command-line)
+    - [Creating configmap from file](#creating-configmap-from-file)
+  - [Secret](#secret)
+    - [Creating secret from command line](#creating-secret-from-command-line)
+    - [Creating secret from file](#creating-secret-from-file)
+  - [Service](#service)
+    - [NodePort](#nodeport)
 - [Nginx Load Balancer](#nginx-load-balancer)
-  * [Ingress Over TLS](#ingress-over-tls)
-  * [Introducing Helm](#introducing-helm)
-  * [Sealed Secret](#sealed-secret)
-    + [Installing kubeseal](#installing-kubeseal)
-    + [Syntax](#syntax)
-  * [Resource Monitoring - Metrics Server](#resource-monitoring---metrics-server)
-  * [Resource Monitoring - Kube Prometheus Stack](#resource-monitoring---kube-prometheus-stack)
-  * [Monitoring Ingress Nginx](#monitoring-ingress-nginx)
-  * [Ingress Nginx Combination](#ingress-nginx-combination)
-    + [Official Documentation](#official-documentation)
-  * [Autoscaling](#autoscaling)
-  * [Stateful Set](#stateful-set)
-  * [Stateful Set on Practice](#stateful-set-on-practice)
-  * [Namespace Quota](#namespace-quota)
-  * [Private Repository](#private-repository)
-  * [Helm Spring Boot Rest API 01](#helm-spring-boot-rest-api-01)
-  * [Helm Chartmuseum (Spring Boot REST API 02)](#helm-chartmuseum--spring-boot-rest-api-02-)
-  * [Helm Spring Boot Rest API 03](#helm-spring-boot-rest-api-03)
-  * [Helm Github As Repository (Spring Boot REST API 03)](#helm-github-as-repository--spring-boot-rest-api-03-)
-  * [Multiple Helm Charts (Spring Boot REST API 04)](#multiple-helm-charts--spring-boot-rest-api-04-)
-  * [ArgoCD](#argocd)
-  * [Tips ArgoCD](#tips-argocd)
-  * [ArgoCD Sensitive Data](#argocd-sensitive-data)
-  * [Reloader](#reloader)
-  * [CRD (Custom Resource Definition)](#crd--custom-resource-definition-)
-  * [Cert Manager](#cert-manager)
+  - [Ingress Over TLS](#ingress-over-tls)
+  - [Introducing Helm](#introducing-helm)
+  - [Nginx Ingress Controller Retirement](#nginx-ingress-controller-retirement)
+  - [Gateway API Hands On](#gateway-api-hands-on)
+  - [Sealed Secret](#sealed-secret)
+    - [Installing kubeseal](#installing-kubeseal)
+    - [Syntax](#syntax)
+  - [Resource Monitoring - Metrics Server](#resource-monitoring---metrics-server)
+  - [Resource Monitoring - Kube Prometheus Stack](#resource-monitoring---kube-prometheus-stack)
+  - [Monitoring Ingress HAProxy](#monitoring-ingress-haproxy)
+  - [Ingress HAProxy Combination](#ingress-haproxy-combination)
+  - [Horizontal Pod Autoscaling](#horizontal-pod-autoscaling)
+  - [Stateful Set](#stateful-set)
+  - [Stateful Set on Practice](#stateful-set-on-practice)
+  - [Namespace Quota](#namespace-quota)
+  - [Private Repository](#private-repository)
+  - [Creating Helm Chart - Spring Boot Rest API 01](#creating-helm-chart---spring-boot-rest-api-01)
+  - [Helm Chartmuseum (Spring Boot REST API 02)](#helm-chartmuseum-spring-boot-rest-api-02)
+  - [Helm Harbor (Spring Boot REST API 02)](#helm-harbor-spring-boot-rest-api-02)
+  - [Helm Spring Boot Rest API 03](#helm-spring-boot-rest-api-03)
+    - [via ChartMuseum](#via-chartmuseum)
+    - [via Harbor](#via-harbor)
+  - [Helm Github As Repository (Spring Boot REST API 03)](#helm-github-as-repository-spring-boot-rest-api-03)
+  - [Multiple Helm Charts (Spring Boot REST API 04)](#multiple-helm-charts-spring-boot-rest-api-04)
+  - [ArgoCD](#argocd)
+  - [Tips ArgoCD](#tips-argocd)
+  - [ArgoCD Sensitive Data](#argocd-sensitive-data)
+  - [Reloader](#reloader)
+  - [CRD (Custom Resource Definition)](#crd-custom-resource-definition)
+  - [Cert Manager](#cert-manager)
 - [East-West Traffic](#east-west-traffic)
-  * [Istio : Kube-Prometheus](#istio---kube-prometheus)
-- [Istio : Nginx](#istio---nginx)
-  * [Istio : Basic](#istio---basic)
-  * [Istio : Enable Sidecar Injection](#istio---enable-sidecar-injection)
-  * [Istio : Kiali](#istio---kiali)
-  * [Istio : Jaeger](#istio---jaeger)
-  * [Istio : Open Telemetry](#istio---open-telemetry)
-  * [Prometheus, Grafana, Istio](#prometheus--grafana--istio)
-  * [Securing Kiali](#securing-kiali)
-  * [Istio : Traffic Routing](#istio---traffic-routing)
-  * [Istio : Nginx Combination](#istio---nginx-combination)
-  * [Istio : Load Balancer](#istio---load-balancer)
-  * [Istio : Canary Release](#istio---canary-release)
-  * [Istio : Canary Release](#istio---canary-release-1)
-  * [Istio : VirtualService](#istio---virtualservice)
-  * [Istio : DestinationRule](#istio---destinationrule)
-  * [Istio : Retry](#istio---retry)
-  * [Istio : Circuit Breaker](#istio---circuit-breaker)
-  * [Istio : Mutual TLS](#istio---mutual-tls)
+  - [Istio : Kube-Prometheus](#istio--kube-prometheus)
+- [Istio : Ingress Controller](#istio--ingress-controller)
+  - [Istio : Basic](#istio--basic)
+  - [Istio : Jaeger](#istio--jaeger)
+  - [Istio : Kiali](#istio--kiali)
+  - [Prometheus, Grafana, Istio](#prometheus-grafana-istio)
+  - [Securing Kiali](#securing-kiali)
+  - [Istio : Traffic Routing](#istio--traffic-routing)
+  - [Istio : Nginx Combination](#istio--nginx-combination)
+  - [Istio : Load Balancer](#istio--load-balancer)
+  - [Istio : Canary Release](#istio--canary-release)
+  - [Istio : Canary Release](#istio--canary-release-1)
+  - [Istio : VirtualService](#istio--virtualservice)
+  - [Istio : DestinationRule](#istio--destinationrule)
+  - [Istio : Retry](#istio--retry)
+  - [Istio : Circuit Breaker](#istio--circuit-breaker)
+  - [Istio : Mutual TLS](#istio--mutual-tls)
 
 ---
 
@@ -134,10 +136,10 @@ kubectl describe pod my-nginx-someRandomNumber
 
 ```bash
 # Deploy your own image (from previous lecture)
-kubectl create deployment my-devops-blue --image [your-docker-username]/devops-blue:1.0.0
+kubectl create deployment my-devops-blue --image [your-docker-username]/devops-blue:2.0.0
 
 # Or you can use public image from my docker
-kubectl create deployment my-devops-blue --image timpamungkas/devops-blue:1.0.0
+kubectl create deployment my-devops-blue --image timpamungkas/devops-blue:2.0.0
 
 # Create service for nginx deployment
 kubectl expose deployment my-devops-blue --type LoadBalancer --port 8111 --name my-devops-blue-lb
@@ -227,11 +229,11 @@ kubectl get pod -n devops
 # Find container name on certain pod (equals to pod spec on declarative file)
 kubectl get pods -n devops [pod-name] -o jsonpath='{.spec.containers[*].name}'
 
-# Run bash to devops-blue container inside [pod-name]
-kubectl exec -n devops [pod-name] -c devops-blue -ti bash
+# Run bin/sh (shell) to devops-blue container inside [pod-name]
+kubectl exec -n devops [pod-name] -c devops-blue -ti -- /bin/sh
 
-# Run bin/sh (alpine linux shell) to alpine-linux container inside [pod-name]
-kubectl exec -n devops [pod-name] -c alpine-linux -ti /bin/sh
+# Run bin/sh (shell) to alpine-linux container inside [pod-name]
+kubectl exec -n devops [pod-name] -c alpine-linux -ti -- /bin/sh
 
 ```
 
@@ -265,11 +267,11 @@ kubectl get pod -n devops
 # Find container name on certain pod (equals to pod spec on declarative file)
 kubectl get pods -n devops [pod-name] -o jsonpath='{.spec.containers[*].name}'
 
-# Run bash to devops-blue container inside [pod-name]
-kubectl exec -n devops [pod-name] -c devops-blue -ti bash
+# Run bin/sh (shell) to devops-blue container inside [pod-name]
+kubectl exec -n devops [pod-name] -c devops-blue -ti -- /bin/sh
 
-# Run bin/sh (alpine linux shell) to alpine-linux container inside [pod-name]
-kubectl exec -n devops [pod-name] -c alpine-linux -ti /bin/sh
+# Run bin/sh (shell) to alpine-linux container inside [pod-name]
+kubectl exec -n devops [pod-name] -c alpine-linux -ti -- /bin/sh
 
 ```
 
@@ -411,6 +413,26 @@ kubectl create secret tls api-devops-local-cert --key [path-to-key-file] --cert 
 helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
 ```
 
+## Nginx Ingress Controller Retirement
+  - [HAProxy K8s Ingress Controller](https://www.haproxy.com/documentation/kubernetes-ingress/)
+  
+```bash
+# Install HAProxy using helm
+helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.service.type=LoadBalancer --set controller.ingressClass=haproxy
+```
+
+## Gateway API Hands On
+
+``` bash
+# Install The Gateway API resources
+kubectl kustomize https://github.com/nginx/nginx-gateway-fabric/config/crd/gateway-api/standard | kubectl apply -f -
+
+# Install Nginx Gateway Fabric
+helm upgrade --install my-nginx-gateway-api oci://ghcr.io/nginx/charts/nginx-gateway-fabric --create-namespace -n nginx-gateway
+
+# Check the Nginx Gateway Fabric installation
+kubectl get service -n nginx-gateway
+```
 
 ## Sealed Secret
 
@@ -418,8 +440,8 @@ helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.git
 
 ### Installing kubeseal
 [Non Windows](https://github.com/bitnami-labs/sealed-secrets#installation)
-[Windows](https://github.com/bitnami-labs/sealed-secrets/releases). Find `kubeseal` release. In windows, it might not updated, so you might want to follow [this link](https://github.com/bitnami-labs/sealed-secrets#installation-from-source) for up-to-date release. However, installing from source requires [go installation](https://go.dev/dl/).
-To extract tar.gz file on Windows, use tools like [7zip](https://www.7-zip.org/)
+[Windows](https://github.com/bitnami-labs/sealed-secrets/releases). Find `kubeseal` release. In windows, it might not updated, so you might want to follow [this link](https://github.com/bitnami-labs/sealed-secrets#installation-from-source) for up-to-date release. However, installing from source requires [go installation](https://go.dev/dl/).  
+The `kubeseal` will be installed in Go Path, subfolder bin. To navigate to the Go path (Windows), `cd %GOPATH%\bin`
 
 ### Syntax
  ```bash
@@ -427,7 +449,7 @@ To extract tar.gz file on Windows, use tools like [7zip](https://www.7-zip.org/)
 helm upgrade --install sealed-secrets sealed-secrets --set-string fullnameOverride=sealed-secrets-controller --repo https://bitnami-labs.github.io/sealed-secrets --namespace kube-system
 
 # Create secret, output it only at terminal (not upload to kubernetes cluster)
-kubectl create secret generic my-secret -n devops -o yaml --dry-run=client --from-file [path to my-config-file.yml]
+kubectl create secret generic my-secret -n devops -o yaml --dry-run=server --from-file [path to my-config-file.yml]
 
 # Port forward the sealed secret service to port 8899
 kubectl port-forward -n kube-system service/sealed-secrets-controller 8899:8080
@@ -435,11 +457,17 @@ kubectl port-forward -n kube-system service/sealed-secrets-controller 8899:8080
 # Download public certificate
 kubeseal --controller-name=sealed-secrets-controller --controller-namespace=kube-system --fetch-cert > mycert.pem
 
-# Seal the secret using kubeseal
+# Seal the secret using kubeseal (Windows CMD/Mac)
 kubeseal -flag < [path-to-input-secret-file] > [path-to-output-sealed-secret-file]
 
-# Example, output is yml file format, using mycert.pem public certificate
+# Example, output is yml file format, using mycert.pem public certificate (Windows CMD/Mac)
 kubeseal --cert mycert.pem -o yaml < my-secret-file.yml > my-sealed-secret-file.yml
+
+# Seal the secret using kubeseal (Windows PowerShell)
+Get-Content [path-to-input-secret-file] | kubeseal -flag | Out-File -Encoding utf8 [path-to-output-sealed-secret-file]
+
+# Example, output is yml file format, using mycert.pem public certificate (Windows PowerShell)
+Get-Content my-secret-file.yml | kubeseal -o yaml --cert mycert.pem | Out-File -Encoding utf8 my-sealed-secret-file.yml
 
 # Apply the sealed secret
 kubectl apply -f my-sealed-secret-file.yml
@@ -494,7 +522,7 @@ kubectl port-forward service/my-kube-prometheus-stack-grafana -n monitoring 3000
 kubectl port-forward service/my-kube-prometheus-stack-alertmanager -n monitoring 9093:9093
 ```
 
-## Monitoring Ingress Nginx
+## Monitoring Ingress HAProxy
 
 ```bash
 # Fresh start - delete minikube cluster
@@ -509,51 +537,34 @@ minikube addons disable ingress
 # 2. Enable metrics server
 minikube addons enable metrics-server
 
-# 3. Install nginx ingress controller using helm
-helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
+# 3. Install HAProxy ingress controller using helm
+helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.ingressClass=haproxy --values values-ingress-haproxy.yml
 
 # 4. Install kube-prometheus-stack using helm
-helm upgrade --install my-kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack --namespace monitoring --create-namespace
+helm upgrade --install my-kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack --namespace monitoring --create-namespace --values values-kube-prometheus.yml
 
-# 5. Upgrade nginx installation. Run on folder monitoring-ingress-nginx
-helm upgrade ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --values values-ingress-nginx.yml
-
-# Optional : Check that nginx configured
-helm get values ingress-nginx --namespace ingress-nginx
-
-# 6. Upgrade kube-prometheus installation. Run on folder monitoring-ingress-nginx
-helm upgrade my-kube-prometheus-stack kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts --namespace monitoring --values values-kube-prometheus.yml
-
-# Optional : Check that prometheus is configured
-helm get values my-kube-prometheus-stack --namespace monitoring
-
-# 7. Apply the deployment sample
+# 5. Apply the deployment sample
 kubectl apply -f devops-monitoring.yml
 
-# 8. Tunneling
+# 6. Tunneling
 # Access via localhost/grafana    localhost/prometheus
 minikube tunnel
 ```
 
-## Ingress Nginx Combination
-
-### Official Documentation
-  - [Nginx ingress annotation](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations)
-  - [Nginx ingress config map](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap)
-  - [Nginx variables](http://nginx.org/en/docs/varindex.html)
+## Ingress HAProxy Combination
 
 ```bash
 # Fresh start - delete minikube cluster
 minikube delete
 
-# Fresh start - restart using workaround to enable resource monitor
-minikube start --extra-config=kubelet.housekeeping-interval=10s
+# Fresh start
+minikube start
 
 # Generate K8s secret for TLS certificate
 kubectl create secret tls api-devops-local-cert -n devops --key [path-to-key-file] --cert [path-to-crt-file]
 
-# 1. Install nginx ingress controller using helm
-helm upgrade --install my-ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
+# 1. Install HAProxy ingress controller using helm
+helm install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.ingressClass=haproxy --values values-ingress-haproxy.yml
 
 # 2. Apply the deployment sample
 kubectl apply -f ingress-combination-deployment.yml
@@ -564,29 +575,9 @@ kubectl apply -f ingress-combination-ingress.yml
 # 4. Tunneling
 # Access via localhost/grafana    localhost/prometheus
 minikube tunnel
-
-# 5. Apply nginx config for request / response custom header
-kubectl apply -f ingress-combination-nginx-configmap-headers.yml
-kubectl apply -f ingress-combination-nginx-configmap-config.yml
-
-# 6. restart nginx
-kubectl rollout restart deployment -n ingress-nginx my-ingress-nginx-controller
-
-
-# Monitoring - 1. Enable metrics server
-minikube addons enable metrics-server
-
-# Monitoring - 2. Install kube-prometheus-stack using helm
-helm upgrade --install my-kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack --namespace monitoring --create-namespace
-
-# Monitoring - 3. Upgrade nginx installation
-helm upgrade my-ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --values values-ingress-nginx.yml
-
-# Monitoring - 4. Upgrade kube-prometheus installation
-helm upgrade my-kube-prometheus-stack kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts --namespace monitoring --values values-kube-prometheus.yml
 ```
 
-## Autoscaling
+## Horizontal Pod Autoscaling
 
 ```bash
 # Enable metrics server
@@ -636,7 +627,7 @@ kubectl port-forward -n rabbitmq my-rabbitmq-2 9222:15672
 kubectl create secret docker-registry dockerhub-secret --docker-server=https://index.docker.io/v1/ --docker-username=[your-username] --docker-password=[your-password] --docker-email=[your-email]
 ```
 
-## Helm Spring Boot Rest API 01
+## Creating Helm Chart - Spring Boot Rest API 01
 
 [Helm template tricks & tips](https://helm.sh/docs/howto/charts_tips_and_tricks/)
 [Helm template best practice](https://helm.sh/docs/howto/charts_tips_and_tricks/)
@@ -646,7 +637,7 @@ kubectl create secret docker-registry dockerhub-secret --docker-server=https://i
 # Run these on folder helm-charts
 
 # [Optional] Render helm template
-helm template helm-yellow-01 spring-boot-rest-api --namespace devops --create-namespace --values ..\kubernetes\helm-spring-boot-rest-api-01\values-spring-boot.yml
+helm template helm-yellow-01 spring-boot-rest-api --namespace devops --create-namespace --values ..\kubernetes\helm-spring-boot-rest-api-01\values-spring-boot.yml --output-dir d:/helm-template-output
 
 # Install helm release
 helm upgrade --install helm-yellow-01 spring-boot-rest-api --namespace devops --create-namespace --values ..\kubernetes\helm-spring-boot-rest-api-01\values-spring-boot.yml
@@ -674,7 +665,44 @@ helm package spring-boot-rest-api
 helm upgrade --install helm-yellow-02 spring-boot-rest-api --repo http://chartmuseum.local/chartmuseum --username chartmuseum --password password --namespace devops --create-namespace --version 0.1.0 --values values-spring-boot.yml
 ```
 
+
+
+## Helm Harbor (Spring Boot REST API 02)
+ - [Artifact hub](https://artifacthub.io/packages/helm/harbor/harbor)
+ - [Homepage](https://goharbor.io/)
+
+```bash
+# Add Helm repository
+helm repo add harbor https://helm.goharbor.io
+helm repo update
+
+# Create secret for TLS
+kubectl create secret tls harbor-local-cert --key [path-to-key-file] --cert [path-to-crt-file]]
+
+# Install harbor
+helm upgrade --install harbor harbor/harbor --namespace harbor --create-namespace --values values-harbor.yml
+
+# Package chart as tgz to be uploaded
+helm package spring-boot-rest-api
+
+# Login Helm into the OCI-compatible registry.
+# Use the --insecure flag to allow an insecure connection (due to untrusted/self-signed TLS certificate).
+helm registry login harbor.local --username admin --password harbor12345 --insecure
+
+# Pushes the packaged Helm chart using the OCI protocol.
+# Use the --insecure-skip-tls-verify flag to skips TLS certificate verification (due to untrusted/self-signed TLS certificate).
+helm push spring-boot-rest-api-0.1.0.tgz oci://harbor.local/helm-charts --insecure-skip-tls-verify
+
+# Create release spring-boot-rest-api from local harbor, using chart version 0.1.0
+# Use the --insecure-skip-tls-verify flag to skips TLS certificate verification (due to untrusted/self-signed TLS certificate).
+helm upgrade --install helm-yellow-02 oci://harbor.local/helm-charts/spring-boot-rest-api --version 0.1.0 --namespace devops --create-namespace --values values-spring-boot.yml --insecure-skip-tls-verify
+```
+
+
+
 ## Helm Spring Boot Rest API 03
+
+### via ChartMuseum
 
 ```bash
 # Install helm release (values.yml + values-dev.yml)
@@ -684,6 +712,14 @@ helm upgrade --install helm-blue-03 spring-boot-rest-api --repo http://chartmuse
 helm upgrade --install helm-blue-03 spring-boot-rest-api --repo http://chartmuseum.local/chartmuseum --username chartmuseum --password password --namespace devops --create-namespace --version 0.1.0 --values values.yml --values values-prod.yml 
 ```
 
+### via Harbor
+```bash
+# Install helm release (values.yml + values-dev.yml)
+helm upgrade --install helm-blue-03 oci://harbor.local/helm-charts/spring-boot-rest-api --namespace devops --insecure-skip-tls-verify --create-namespace --version 0.1.0 --values values.yml --values values-dev.yml 
+
+# Install helm release (values.yml + values-prod.yml)
+helm upgrade --install helm-blue-03 oci://harbor.local/helm-charts/spring-boot-rest-api --namespace devops --insecure-skip-tls-verify --create-namespace --version 0.1.0 --values values.yml --values values-prod.yml 
+```
 
 ## Helm Github As Repository (Spring Boot REST API 03)
 
@@ -710,7 +746,7 @@ helm upgrade --install helm-blue-04 chart-with-dependencies --namespace devops -
 helm upgrade --install my-argocd argo-cd --repo https://argoproj.github.io/argo-helm --namespace argocd --create-namespace --values values-argocd.yml
 ```
 
-[Create github personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+[Create github personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token)
 
 
 ## Tips ArgoCD
@@ -724,6 +760,8 @@ helm upgrade --install my-argocd argo-cd --repo https://argoproj.github.io/argo-
 The yaml references available on folder `kubernetes-istio-docs/devops-app-deployment`
 
 ```bash
+helm create sealed-secret
+
 kubeseal --controller-name=sealed-secrets-controller --controller-namespace=kube-system --fetch-cert > mycert.pem
 
 # Example, output is yml file format, using mycert.pem public certificate
@@ -763,7 +801,7 @@ kubectl apply -f devops-reloader-deployment.yml
 
 ## Cert Manager
 ```bash
-helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.io --namespace cert-manager --create-namespace --set installCRDs="true"
+helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.io --namespace cert-manager --create-namespace --set crds.enabled="true"
 ```
 
 
@@ -780,11 +818,11 @@ helm upgrade --install kube-prometheus-stack --repo https://prometheus-community
 ```
 
 
-# Istio : Nginx
+# Istio : Ingress Controller
 
 ```bash
-# nginx
-helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace --values values-ingress-nginx.yml
+# haproxy ingress
+helm upgrade --install haproxy-ingress haproxytech/kubernetes-ingress --namespace haproxy --create-namespace --set controller.service.type=LoadBalancer --set controller.ingressClass=haproxy -f values-ingress-haproxy.yml
 ```
 
 
@@ -797,30 +835,45 @@ helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.git
 helm upgrade --install istio-base base --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --create-namespace
 
 # Istio daemon (istiod)
-helm upgrade --install istiod istiod --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --create-namespace
+helm upgrade --install istiod istiod --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --create-namespace 
 
 # Scrape istio metrics
 kubectl apply -f istio-scrape.yml
 
 # Deployment apply
-kubectl apply -f devops-istio-basic-deployment-1.0.0.yml
+kubectl apply -f devops-istio-basic-deployment-2.0.0.yml
+
+# Disable istio on ingress
+kubectl apply -f disable-istio-on-ingress.yml
+kubectl rollout restart deployment -n haproxy
+
+# add label to namespace
+kubectl apply -f devops-istio-enable-sidecar.yml
+kubectl rollout restart deployment -n devops
 ```
 
 
-## Istio : Enable Sidecar Injection
+## Istio : Jaeger
 
 ```bash
-# add label to namespace
-kubectl apply -f devops-istio-enable-sidecar.yml
+# Need to install certmanager
+helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.io --namespace cert-manager --create-namespace --set crds.enabled="true"
 
-# dummy pod
-kubectl apply -f devops-istio-dummy-blue.yml
+# Install opentelemetry
+kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
 
-# restart existing deployment
-kubectl rollout restart deployment -n devops
+# Install jaeger
+helm repo add jaegertracing https://jaegertracing.github.io/helm-charts
 
-# remove dummy pod
-kubectl delete -f devops-istio-dummy-blue.yml
+helm repo update
+
+helm upgrade --install jaeger jaegertracing/jaeger --version 4.3.2 --values values-jaeger-all-in-one.yml --namespace jaeger --create-namespace
+
+# Send tracing to Jaeger
+kubectl apply -f istio-jaeger-tracing.yml
+
+# Apply deployment
+kubectl apply -f devops-istio-basic-deployment-2.0.1.yml
 ```
 
 
@@ -830,50 +883,16 @@ kubectl delete -f devops-istio-dummy-blue.yml
 
 ```bash
 # Kiali Server
-helm upgrade --install kiali-server kiali-server --repo https://kiali.org/helm-charts --namespace istio-system --create-namespace --values values-kiali-server.yml
+helm repo add kiali https://kiali.org/helm-charts
+
+helm repo update
+
+helm upgrade --install kiali-server kiali/kiali-server  --namespace istio-system --create-namespace --values values-kiali-server.yml --version 2.20.0
+
+# Modify telemetry
+kubectl apply -f istio-prometheus-telemetry.yml
 ```
 
-
-## Istio : Jaeger
-
-```bash
-# Need to install certmanager
-helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.io --namespace cert-manager --create-namespace --set installCRDs="true"
-
-# create namespace
-kubectl apply -f devops-istio-jaeger-namespace.yml
-
-# Create jaeger operator
-# Latest version, google with keyword : jaegertracing.io install kubernetes operator
-# wait for operator to complete
-kubectl apply -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.36.0/jaeger-operator.yaml -n observability
-
-# Install simple jaeger
-kubectl apply -f install-jaeger-simple.yml
-
-# Update istiod, send 100% trace to jaeger
-helm upgrade istiod istiod --repo https://istio-release.storage.googleapis.com/charts --namespace istio-system --values values-istiod-after-jaeger.yml
-
-# apply deployment
-kubectl apply -f devops-istio-basic-deployment-1.0.1.yml
-```
-
-
-## Istio : Open Telemetry
-
-```bash
-# Make sure cert-manager already installed
-helm upgrade --install cert-manager cert-manager --repo https://charts.jetstack.io --namespace cert-manager --create-namespace --set installCRDs="true"
-
-# Install open telemetry operator
-kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
-
-# Install open telemetry objects
-kubectl apply -f devops-open-telemetry.yml
-
-# Deploy application with open telemetry sidecar
-kubectl apply -f devops-istio-basic-deployment-1.0.0-otel.yml
-```
 
 ## Prometheus, Grafana, Istio
 
@@ -893,7 +912,7 @@ URL for prometheus:
 
 ```bash
 # Create service account token
-kubectl apply -f kiali-sa-token.yml
+kubectl apply -f kiali-service-account-token.yml
 
 # Use token auth
 helm upgrade --install kiali-server kiali-server --repo https://kiali.org/helm-charts --namespace istio-system --create-namespace --values values-kiali-server-secure.yml
@@ -903,11 +922,11 @@ helm upgrade --install kiali-server kiali-server --repo https://kiali.org/helm-c
 Clear all deployment (pod, service, ingress) on `devops` namespace, then apply below 
 
 ```bash
-# 1.0.0
-kubectl apply -f devops-istio-routing-1.0.0.yml
+# 2.0.0
+kubectl apply -f devops-istio-routing-2.0.0.yml
 
-# 1.0.1 (additional pod)
-kubectl apply -f devops-istio-routing-1.0.1.yml
+# 2.0.1 (additional pod)
+kubectl apply -f devops-istio-routing-2.0.1.yml
 
 # Service & Ingress
 kubectl apply -f devops-istio-routing-service.yml
@@ -950,11 +969,11 @@ kubectl apply -f devops-istio-load-balancer.yml
  - Clear all istio objects (virtual service, destination rule)
 
 ```bash
-# 1.0.0
-kubectl apply -f devops-istio-canary-1.0.0.yml
+# 2.0.0
+kubectl apply -f devops-istio-canary-2.0.0.yml
 
-# 1.0.1 (new white pod)
-kubectl apply -f devops-istio-canary-1.0.1.yml
+# 2.0.1 (new white pod)
+kubectl apply -f devops-istio-canary-2.0.1.yml
 
 # Service & Ingress
 kubectl apply -f devops-istio-canary-service.yml
@@ -984,6 +1003,9 @@ Use this on `VirtualService.spec.retryOn` : `5xx,400,401,403,404,405,406,408,413
 
 ## Istio : Circuit Breaker
 
+```bash
+kubectl apply -f devops-istio-circuit-breaker.yml
+```
 
 ## Istio : Mutual TLS 
 
@@ -995,8 +1017,6 @@ kubectl apply -f devops-istio-mtls-deployment.yml
 kubectl apply -f devops-istio-mtls-mode.yml
 
 # Reload deployment on namespaces after namespace modification
-kubectl rollout restart deployment -n ingress-nginx
-
 kubectl rollout restart deployment -n devops-blue
 
 kubectl rollout restart deployment -n devops-yellow
@@ -1004,15 +1024,3 @@ kubectl rollout restart deployment -n devops-yellow
 kubectl rollout restart deployment -n devops-white
 ```
 
-
-kubectl apply -f devops-istio-mtls-deployment.yml
-
-kubectl apply -f devops-istio-mtls-mode.yml
-
-kubectl rollout restart deployment -n ingress-nginx
-
-kubectl rollout restart deployment -n devops-blue
-
-kubectl rollout restart deployment -n devops-yellow
-
-kubectl rollout restart deployment -n devops-white
